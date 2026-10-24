@@ -27,7 +27,7 @@ jobs:
           persist-credentials: false
 
       - name: Run the tests
-        run: ./scripts/tests.sh
+        run: ./scripts/test.sh
 
       # The image steps run even when the tests fail, so one run shows both.
       - name: Name the image
