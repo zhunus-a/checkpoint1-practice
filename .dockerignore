@@ -1,0 +1,11 @@
+# Keep these out of the build context (week 5): history, secrets, caches, tests.
+.git
+.github
+.env
+.env.*
+**/__pycache__
+*.pyc
+tests/
+checkpoint/
+# The test log that scripts/test.sh writes.
+test-output.txt

@@ -1,0 +1,2 @@
+# Shell scripts keep Linux line endings, even when edited on Windows (week 5).
+*.sh text eol=lf

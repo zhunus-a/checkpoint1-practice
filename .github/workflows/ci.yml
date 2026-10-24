@@ -1,0 +1,39 @@
+# Checkpoint 1 pipeline. Every push, to any branch, runs it.
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Test and build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Run the tests
+        run: ./scripts/tests.sh
+
+      # The image steps run even when the tests fail, so one run shows both.
+      - name: Name the image
+        if: ${{ !cancelled() }}
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+
+      - name: Build the image
+        if: ${{ !cancelled() }}
+        run: docker build --tag "$IMAGE:$GITHUB_SHA" .
