@@ -13,7 +13,7 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path == "/":
             self._send(200, "notes service")
         elif self.path == "/notes":
-            self._send(200, str(len(NOTES) - 1))
+            self._send(200, str(len(NOTES)))
         elif self.path == "/notes/first":
             self._send(200, NOTES[0])
         elif self.path == "/notes/latest":
